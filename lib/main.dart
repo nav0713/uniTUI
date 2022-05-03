@@ -1,8 +1,7 @@
+// @dart=2.9
 import 'package:flutter/material.dart';
 import 'package:ui/button.dart';
-import 'package:ui/login.dart';
-import 'package:ui/style.dart';
-import 'package:ui/textformfield.dart';
+import './grid.dart';
 
 void main() {
   runApp(const MyApp());
@@ -22,7 +21,7 @@ Map<int, Color> color = {
 };
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({Key key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -38,7 +37,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
+  const MyHomePage({Key key, this.title}) : super(key: key);
 
   final String title;
 
@@ -52,114 +51,112 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: ListView(
-            children: <Widget>[
-              const Text(
-                'You have pushed the button this many times:',
-                style: TextStyle(fontWeight: FontWeight.w700),
-              ),
-              const InputField(),
-              const InputField(),
-              TextFormField(
-                obscureText: false,
-                decoration: loginTextFieldStyle(),
-                style: const TextStyle(
-                  fontSize: 14,
-                ),
-              ),
-              const SizedBox(
-                height: 25,
-              ),
-              TextFormField(
-                obscureText: false,
-                controller: _textEditingController,
-                onChanged: (value) {
-                  setState(() {
-                    value.isEmpty
-                        ? showSuffixIcon = true
-                        : showSuffixIcon = false;
-                  });
-                },
-                decoration: loginTextFieldStyle().copyWith(
-                    hintText: "Enter Password...",
-                    labelText: "Password",
-                    prefixIcon: const Icon(Icons.lock),
-                    suffixIcon: Visibility(
-                        visible:
-                            _textEditingController.text.isEmpty ? false : true,
-                        child: const Icon(Icons.remove_red_eye))),
-                style: const TextStyle(
-                  fontSize: 14,
-                ),
-              ),
-              const SizedBox(
-                height: 25,
-              ),
-              SizedBox(
-                  width: 300,
-                  height: 50,
-                  child: ElevatedButton(
-                      onPressed: () {},
-                      style: style(MaterialColor(0xffEC416C, color),
-                          Colors.transparent, Colors.white54),
-                      child: const Text("Login",
-                          style: TextStyle(
-                            color: Colors.white,
-                          )))),
-              Container(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  width: MediaQuery.of(context).size.width * .50,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      SizedBox(
-                        width: 30,
-                        child: Divider(
-                          color: Colors.grey,
-                          height: 2,
-                        ),
-                      ),
-                      Text(
-                        "  or login via QR code  ",
-                        style: TextStyle(fontSize: 12),
-                      ),
-                      SizedBox(
-                        width: 30,
-                        child: Divider(
-                          color: Colors.grey,
-                          height: 2,
-                        ),
-                      ),
-                    ],
-                  )),
-              SizedBox(
-                  width: 300,
-                  height: 50,
-                  child: ElevatedButton.icon(
-                      icon: const Icon(
-                        Icons.qr_code,
-                        color: Color(0xffEC416C),
-                      ),
-                      onPressed: () {},
-                      style: style(
-                          Colors.white,
-                          MaterialColor(0xffEC416C, color),
-                          const Color(0xffEC416C).withOpacity(.4)),
-                      label: const Text("Scan QR code",
-                          style: TextStyle(
-                            color: Color(0xffEC416C),
-                          ))))
-            ],
-          ),
-        ),
-      ),
+      // body: Center(
+      //   child: Padding(
+      //     padding: const EdgeInsets.symmetric(horizontal: 20),
+      //     child: ListView(
+      //       children: <Widget>[
+      //         const Text(
+      //           'You have pushed the button this many times:',
+      //           style: TextStyle(fontWeight: FontWeight.w700),
+      //         ),
+      //         const InputField(),
+      //         const InputField(),
+      //         TextFormField(
+      //           obscureText: false,
+      //           decoration: loginTextFieldStyle(),
+      //           style: const TextStyle(
+      //             fontSize: 14,
+      //           ),
+      //         ),
+      //         const SizedBox(
+      //           height: 25,
+      //         ),
+      //         TextFormField(
+      //           obscureText: false,
+      //           controller: _textEditingController,
+      //           onChanged: (value) {
+      //             setState(() {
+      //               value.isEmpty
+      //                   ? showSuffixIcon = true
+      //                   : showSuffixIcon = false;
+      //             });
+      //           },
+      //           decoration: loginTextFieldStyle().copyWith(
+      //               hintText: "Enter Password...",
+      //               labelText: "Password",
+      //               prefixIcon: const Icon(Icons.lock),
+      //               suffixIcon: Visibility(
+      //                   visible:
+      //                       _textEditingController.text.isEmpty ? false : true,
+      //                   child: const Icon(Icons.remove_red_eye))),
+      //           style: const TextStyle(
+      //             fontSize: 14,
+      //           ),
+      //         ),
+      //         const SizedBox(
+      //           height: 25,
+      //         ),
+      //         SizedBox(
+      //             width: 300,
+      //             height: 50,
+      //             child: ElevatedButton(
+      //                 onPressed: () {},
+      //                 style: style(MaterialColor(0xffEC416C, color),
+      //                     Colors.transparent, Colors.white54),
+      //                 child: const Text("Login",
+      //                     style: TextStyle(
+      //                       color: Colors.white,
+      //                     )))),
+      //         Container(
+      //             padding: const EdgeInsets.symmetric(vertical: 10),
+      //             width: MediaQuery.of(context).size.width * .50,
+      //             child: Row(
+      //               mainAxisAlignment: MainAxisAlignment.center,
+      //               children: const [
+      //                 SizedBox(
+      //                   width: 30,
+      //                   child: Divider(
+      //                     color: Colors.grey,
+      //                     height: 2,
+      //                   ),
+      //                 ),
+      //                 Text(
+      //                   "  or login via QR code  ",
+      //                   style: TextStyle(fontSize: 12),
+      //                 ),
+      //                 SizedBox(
+      //                   width: 30,
+      //                   child: Divider(
+      //                     color: Colors.grey,
+      //                     height: 2,
+      //                   ),
+      //                 ),
+      //               ],
+      //             )),
+      //         SizedBox(
+      //             width: 300,
+      //             height: 50,
+      //             child: ElevatedButton.icon(
+      //                 icon: const Icon(
+      //                   Icons.qr_code,
+      //                   color: Color(0xffEC416C),
+      //                 ),
+      //                 onPressed: () {},
+      //                 style: style(
+      //                     Colors.white,
+      //                     MaterialColor(0xffEC416C, color),
+      //                     const Color(0xffEC416C).withOpacity(.4)),
+      //                 label: const Text("Scan QR code",
+      //                     style: TextStyle(
+      //                       color: Color(0xffEC416C),
+      //                     ))))
+      //       ],
+      //     ),
+      //   ),
+      // ),
 // This trailing comma makes auto-formatting nicer for build methods.
+      body: GridViewDemo(),
     );
   }
 }
